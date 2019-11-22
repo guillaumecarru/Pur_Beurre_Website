@@ -75,12 +75,16 @@ WSGI_APPLICATION = 'mydjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+DB_NAME = os.environ.get("BDD")
+DB_USER = os.environ.get("USER")
+DB_PW = os.environ.get("PW_POSTGRES")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("BDD"),
-        'USER': os.environ.get("USER"),
-        'PASSWORD': os.environ.get("PW_POSTGRES"),
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PW,
         'HOST': '',
         'PORT': '5432',
     }
@@ -88,6 +92,8 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

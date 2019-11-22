@@ -3,5 +3,5 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-def dbprod(request):
+def index(request):
     return HttpResponse("Will display something soon")
