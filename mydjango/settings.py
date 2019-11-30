@@ -133,3 +133,28 @@ STATIC_URL = '/static/'
 # Adding line below for application 'users'
 AUTH_USER_MODEL = 'users.CustomUser'
 
+# Constants required for populating database
+# Used in dbproducts/management/commands
+
+OPEN_FOOD_SITE = "https://fr.openfoodfacts.org/cgi/search.pl?"
+SITE_PARAMETERS = {'action' : 'process',
+                   'tagtype_0' : 'categories',
+                   'tag_contains_0' : 'contains',
+                   # 'tag_0' : 'pizza',
+                   'page_size' : '1000',
+                   'page' : '1',
+                   'json' : 1,
+                  }
+
+TAG_CAT = 'tag_0'
+PROD_CATEGORIES = ["viande",
+                   "poisson",
+                   "pates",
+                   "legumes",
+                   "gateau",
+                   "conserve",
+                   "fromage",
+                   "dessert",
+                   "yaourt",
+                   "boisson"
+                  ]

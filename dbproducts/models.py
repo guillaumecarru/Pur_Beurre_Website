@@ -9,7 +9,7 @@ class Product(models.Model):
 
     id = models.BigIntegerField(primary_key=True)
     product_name = models.CharField(max_length=150)
-    nutri_grade = models.CharField(max_length=1)
+    nutri_grade = models.IntegerField()
     web_link = models.URLField()
     categories = models.ManyToManyField("Category",
                                        )
