@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
-#    'users',
-    'favorites',
-    'dbproducts',
+    'favorites.apps.FavoritesConfig',
+    'dbproducts.apps.DbproductsConfig',
+    #si ca ne marche pas, regarder dans le fichier app de dbproducts, et
+    #favorites
     'django_extensions',
 ]
 
@@ -141,7 +142,7 @@ SITE_PARAMETERS = {'action' : 'process',
                    'tagtype_0' : 'categories',
                    'tag_contains_0' : 'contains',
                    # 'tag_0' : 'pizza',
-                   'page_size' : '1000',
+                   'page_size' : '500',
                    'page' : '1',
                    'json' : 1,
                   }
@@ -152,7 +153,6 @@ PROD_CATEGORIES = ["viande",
                    "pates",
                    "legumes",
                    "gateau",
-                   "conserve",
                    "fromage",
                    "dessert",
                    "yaourt",

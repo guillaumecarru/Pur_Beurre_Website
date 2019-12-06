@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.core.exceptions import FieldDoesNotExist, FieldError
 
 from django.conf import settings
 import requests
@@ -36,9 +37,6 @@ class Command(BaseCommand):
                                    settings.SITE_PARAMETERS).json()
                 # Removing useless valors
                 req = req["products"]
-                # Compting number of products,
-                # because Heroku has limitation
-                valor_compt = 0
 
                 for prods in req:
                     if prods["_id"] not in self.id_prod_website \
@@ -59,16 +57,8 @@ class Command(BaseCommand):
                                                               ))
 
                             self.id_prod_website.append(prods["_id"])
-                            # Adding compts
-                            valor_compt += 1
-                        except:
+                        except KeyError:
                             pass
-                        finally:
-                            # Marker prevents website from overloading server
-                            # with too much products. Heroku limits total
-                            # number of lines.
-                            if valor_compt == 500:
-                                break
             print("{} products gathered from OpenFoodFacts website"\
                   .format(len(self.informations_gathered)))
 
@@ -83,34 +73,43 @@ class Command(BaseCommand):
             # Will be used to not add them if already inserted in database
             sub_cat = []
 
+            #marker for insertion
+            marker = 1
+            show_five_hundred = 500
+
             # Inserting product into Products table
             for info_product in self.informations_gathered:
-                add_prod = Product.objects.create(id=info_product[0],
-                                                  product_name=info_product[1],
-                                                  nutri_grade=info_product[2],
-                                                  web_link=info_product[3],
-                                                 )
-                add_prod.save()
-                # id of product created, main informations wrote.
+                try:
+                    add_prod = Product.objects.create(id=info_product[0],
+                                                      product_name=info_product[1],
+                                                      nutri_grade=info_product[2],
+                                                      web_link=info_product[3],
+                                                     )
 
-                for num_sub_categories in info_product[4]:
-                    # Creating a var without symbols, converted for
-                    # SQL policy
-                    sub_category = symbol_removal(num_sub_categories)
+                    marker += 1
+                    if marker == show_five_hundred:
+                        print("{} insertions into database so far".format(show_five_hundred))
+                        show_five_hundred += 500
 
-                    if sub_category in sub_cat:
-                        pass
-                    else:
-                        sub_cat.append(sub_category)
+                    for num_sub_categories in info_product[4]:
+                        # Creating a var without symbols, converted for
+                        # SQL policy
+                        sub_category = symbol_removal(num_sub_categories)
 
-                        add_sub_cat = Category.objects.create(name=sub_category)
-                        # Then save
-                        add_sub_cat.save()
+                        if sub_category in sub_cat:
+                            pass
+                        else:
+                            sub_cat.append(sub_category)
+                            add_sub_cat = Category.objects.create(name=sub_category)
+                        #Adding many to many relation between product and category
+                        add_prod.categories.add(add_sub_cat)
 
-                    #Adding many to many relation between product and category
-                    add_prod.categories.add(add_sub_cat)
-                    add_prod.save()
+                except FieldDoesNotExist:
+                    print("The column you are trying to fullfill doesn't exist")
 
+                except FieldError:
+                    print("The information you are trying to enter \
+                         into the database has incorrect values")
         # Running all functions wrote in "handle" Command function
         gather_informations()
         populating_db()
