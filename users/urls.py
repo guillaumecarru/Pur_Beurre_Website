@@ -8,5 +8,5 @@ urlpatterns = [
     # Modify user
     path("log_in/", views.log_in, name="log_in"),
     # Delete user
-    path("delete_user/", views.delete_user, name="delete_user"),
+    path("edit_profile/", views.edit_profile, name="edit_profile"),
 ]

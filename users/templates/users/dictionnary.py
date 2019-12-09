@@ -12,4 +12,11 @@ DICTIO = {
         "err_connexion":"Utilisateur inconnu ou mauvais mot de passe",
         "button_connect":"Connexion",
     },
+    "change_info_temp":{
+        "welc_title": "Informations du compte",
+        "modif_one":"Vous pouvez changer les informations ci-dessous",
+        "apply_advert":"Pour appliquer les changements, veuillez appuyer sur \
+entrée",
+        "passw":"changer password",
+    },
 }
