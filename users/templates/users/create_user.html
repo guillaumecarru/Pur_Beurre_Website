@@ -1,9 +1,13 @@
-{# test for making that piss of shit work. Please #}
+<!-- Taken from
+https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
+huge thanks to them for making me understand how it works. -->
 
+{% block content %}
 <h1>
 {{ create_user_temp.welc_title }}
 </h1>
 <p> {{ create_user_temp.temp_one }} </p>
+
 <form method="post">
   {% csrf_token %}
   {% for field in form %}
@@ -13,7 +17,11 @@
       {% if field.help_text %}
           <small style="color: grey">{{ field.help_text }}</small>
         {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
     </p>
   {% endfor %}
-  <button type="submit">Sign up</button>
+  <button type="submit">{{ create_user_temp.confirm }}</button>
 </form>
+{% endblock %}

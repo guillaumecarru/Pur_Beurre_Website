@@ -5,6 +5,11 @@ DICTIO = {
     "create_user_temp":{
         "welc_title":"Bienvenue sur la page d'inscription",
         "temp_one":"Veuillez remplir ce formulaire pour vous inscrire",
-        "wrong_info":"Certaines informations ne sont pas valides",
-    }
+        "confirm":"Confirmer",
+    },
+    "log_in_temp":{
+        "welc_title":"Se connecter",
+        "err_connexion":"Utilisateur inconnu ou mauvais mot de passe",
+        "button_connect":"Connexion",
+    },
 }

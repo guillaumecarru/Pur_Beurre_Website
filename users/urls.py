@@ -6,7 +6,7 @@ urlpatterns = [
     # Create user
     path("create_user/", views.create_user, name="create_user"),
     # Modify user
-    path("modify_user/", views.modify_user, name="modify_user"),
+    path("log_in/", views.log_in, name="log_in"),
     # Delete user
     path("delete_user/", views.delete_user, name="delete_user"),
 ]

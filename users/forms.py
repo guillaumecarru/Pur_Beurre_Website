@@ -9,6 +9,14 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ('username', 'email',)
 
+class ConnexionForm(forms.Form):
+    username = forms.CharField(label="Nom d'utilisateur", max_length=30)
+    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+
+    class Meta:
+        model = CustomUser
+        fields = ("username", "password")
+
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:

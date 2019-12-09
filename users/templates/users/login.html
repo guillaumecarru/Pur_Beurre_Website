@@ -1,0 +1,17 @@
+<!-- This file provides login informations -->
+
+<h1> {{ log_in_temp.welc_title }} </h1>
+{% if error %}
+<p><strong style="color: red"> {{ log_in_temp.err_connexion }} </strong></p>
+{% endif %}
+
+{% if user.is_authenticated %}
+Vous êtes connecté, {{ user.username }} !
+{% else %}
+<form method="post" action=".">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value= {{ log_in_temp.button_connect }} />
+
+</form>
+{% endif %}
