@@ -16,7 +16,11 @@ DICTIO = {
         "welc_title": "Informations du compte",
         "modif_one":"Vous pouvez changer les informations ci-dessous",
         "apply_advert":"Pour appliquer les changements, veuillez appuyer sur \
-entrée",
+entrée ou sur le bouton ci-dessous",
         "passw":"changer password",
     },
+    "change_passw":{
+        "change_pass_title":"Changement de mot de passe",
+        "confirm_pass":"Confirmer",
+    }
 }

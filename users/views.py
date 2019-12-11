@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
+from django.contrib import messages
 
-from users.forms import CustomUserCreationForm, ConnexionForm, CustomUserChangeForm
+from users.forms import CustomUserCreationForm, ConnexionForm, CustomUserChangeForm, CustomUserChangePassword
 from users.templates.users.dictionnary import DICTIO
 
 def create_user(request):
@@ -56,12 +57,15 @@ def log_in(request):
     except:
         raise Http404("Page not found")
 
+def disconnect_user(request):
+    logout(request)
+    return redirect("index")
+
 def edit_profile(request):
     """ This function will display a template for user deletion"""
     try:
         if "passw" in request.POST:
-            # Modify HttpResponse to change password
-            return HttpResponse("Sucess")
+            return redirect("change_password")
 
         if request.method == "POST" and "confirm" in request.POST:
             form = CustomUserChangeForm(request.POST, instance=request.user)
@@ -75,6 +79,29 @@ def edit_profile(request):
             DICTIO["form"] = form
         return render(request,
                       "users/edit_profile.html",
+                      DICTIO,
+                     )
+    except:
+        raise Http404("Page not found")
+
+def change_password(request):
+
+    try:
+        if request.method == "POST":
+            form = CustomUserChangePassword(request.user, request.POST)
+
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, "Your password was successfully updated!")
+                return redirect ("change_password")
+            else:
+                messages.error(request, "Please correct the error below")
+        else:
+            form = CustomUserChangePassword(request.user)
+            DICTIO["form"] = form
+        return render(request,
+                      'users/change_password.html',
                       DICTIO,
                      )
     except:

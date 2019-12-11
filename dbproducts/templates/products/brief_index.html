@@ -1,0 +1,24 @@
+<!-- made for developpement purpose, will remove soon -->
+
+{% block content %}
+
+<h1>
+Brief homepage, made for disconnect test
+</h1>
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+
+    <button type="submit" name="disco"> deconnexion </button>
+
+</form>
+
+{% endblock %}

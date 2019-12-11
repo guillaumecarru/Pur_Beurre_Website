@@ -5,8 +5,12 @@ from . import views
 urlpatterns = [
     # Create user
     path("create_user/", views.create_user, name="create_user"),
-    # Modify user
+    # log user
     path("log_in/", views.log_in, name="log_in"),
-    # Delete user
+    # edit user
     path("edit_profile/", views.edit_profile, name="edit_profile"),
+    # modify password
+    path("edit_profile/change_password/", views.change_password, name="change_password"),
+    # disconnect
+    path("disconnect_user/", views.disconnect_user, name="disconnect_user"),
 ]
