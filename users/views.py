@@ -72,8 +72,8 @@ def edit_profile(request):
 
             if form.is_valid():
                 form.save()
-                # For now, redirects to dbproducts (change later)
-                return redirect("index")
+                messages.success(request, "Le profil a été mis à jour")
+                return redirect("edit_profile")
         else:
             form = CustomUserChangeForm(instance=request.user)
             DICTIO["form"] = form
@@ -93,10 +93,10 @@ def change_password(request):
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)
-                messages.success(request, "Your password was successfully updated!")
-                return redirect ("change_password")
+                messages.success(request, "Votre mot de passe est mis à jour")
+                return redirect("change_password")
             else:
-                messages.error(request, "Please correct the error below")
+                messages.error(request, "Mot de passe ou nouveau mot de passe incorrect")
         else:
             form = CustomUserChangePassword(request.user)
             DICTIO["form"] = form
