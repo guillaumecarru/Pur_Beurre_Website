@@ -6,8 +6,9 @@ DICTIO = {
         "prod_title":"Informations du produit",
         "specs":{
             "name":"Nom du produit",
-            "nutri_score":"score nutritionnel",
+            "nutri_score":"informations nutritionnelles",
             "web":"site web",
-        }
+        },
+        "link_name":"lien vers OpenFoodFacts",
     }
 }

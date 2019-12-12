@@ -5,16 +5,19 @@
 {{ prod_info_var.prod_title }}
 </h1>
 <p>
-{{ prod_info_var.specs.name }}
+<small style="color: grey"> {{ prod_info_var.specs.name }}
+ </small>
 {{ info.product_name }}
+<img src={{ info.img_front_url }} alt="image du produit">
+
 </p>
 <p>
 {{ prod_info_var.specs.nutri_score }}
-{{ info.nutri_grade }}
+<img src=  {{ info.img_nutrition_url }} alt="fiche produit">
 </p>
 <p>
 {{ prod_info_var.specs.web }}
-{{ info.web_link }}
+<a href={{ info.web_link }}>{{ prod_info_var.link_name }}</a>
 </p>
 
 

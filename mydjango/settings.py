@@ -131,9 +131,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Adding line below for application 'users'
-AUTH_USER_MODEL = 'users.CustomUser'
-
 # Constants required for populating database
 # Used in dbproducts/management/commands
 
@@ -158,3 +155,6 @@ PROD_CATEGORIES = ["viande",
                    "yaourt",
                    "boisson"
                   ]
+
+# Adding line below for application 'users'
+AUTH_USER_MODEL = 'users.CustomUser'
