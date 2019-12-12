@@ -47,11 +47,9 @@ class Command(BaseCommand):
                         try:
                             self.informations_gathered.append((prods["_id"],
                                                                prods["product_name_fr"],
-                                                               # Adding numbers
-                                                               # of ASCII for
-                                                               # nutrition
-                                                               # grade
+                                                               prods["image_front_url"],
                                                                ord(prods["nutrition_grades"]),
+                                                               prods["image_nutrition_url"],
                                                                prods["url"],
                                                                prods["categories_hierarchy"],
                                                               ))
@@ -82,8 +80,10 @@ class Command(BaseCommand):
                 try:
                     add_prod = Product.objects.create(id=info_product[0],
                                                       product_name=info_product[1],
-                                                      nutri_grade=info_product[2],
-                                                      web_link=info_product[3],
+                                                      img_front_url=info_product[2],
+                                                      nutri_grade=info_product[3],
+                                                      img_nutrition_url=info_product[4],
+                                                      web_link=info_product[5],
                                                      )
 
                     marker += 1
@@ -91,7 +91,7 @@ class Command(BaseCommand):
                         print("{} insertions into database so far".format(show_five_hundred))
                         show_five_hundred += 500
 
-                    for num_sub_categories in info_product[4]:
+                    for num_sub_categories in info_product[6]:
                         # Creating a var without symbols, converted for
                         # SQL policy
                         sub_category = symbol_removal(num_sub_categories)

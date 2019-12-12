@@ -1,0 +1,21 @@
+<!-- this template displays product informations -->
+
+{% block content %}
+<h1>
+{{ prod_info_var.prod_title }}
+</h1>
+<p>
+{{ prod_info_var.specs.name }}
+{{ info.product_name }}
+</p>
+<p>
+{{ prod_info_var.specs.nutri_score }}
+{{ info.nutri_grade }}
+</p>
+<p>
+{{ prod_info_var.specs.web }}
+{{ info.web_link }}
+</p>
+
+
+{% endblock %}
