@@ -2,12 +2,20 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from users.forms import CustomUserCreationForm, ConnexionForm, CustomUserChangeForm, CustomUserChangePassword
-from users.templates.users.dictionnary import DICTIO
 
 def create_user(request):
     """ This function will be used to display a template for user creation"""
+    DICTIO = {
+                "create_user_temp":{
+                    "welc_title":"Bienvenue sur la page d'inscription",
+                    "temp_one":"Veuillez remplir ce formulaire pour vous inscrire",
+                    "confirm":"Confirmer",
+                }
+    }
+
     try:
         if request.method == 'POST':
             form = CustomUserCreationForm(request.POST)
@@ -34,7 +42,14 @@ def create_user(request):
 
 def log_in(request):
     """ This function will display a template for user identification"""
-    DICTIO["error"] = False
+    DICTIO = {
+        "log_in_temp":{
+            "welc_title":"Se connecter",
+            "err_connexion":"Utilisateur inconnu ou mauvais mot de passe",
+            "button_connect":"Connexion",
+        },
+    }
+
     try:
         if request.method == "POST":
             form = ConnexionForm(request.POST)
@@ -45,12 +60,17 @@ def log_in(request):
                 if user:
                     login(request, user)
                     # For now, redirects to dbproducts (change later)
-                    return redirect("index")
+                    redirect_url = request.GET.get('next')
+                    if redirect_url is None:
+                        redirect_url = "index"
+                    return redirect(redirect_url)
                 else:
-                    DICTIO["error"] = True
+                    messages.error(request, " Utilisateur ou mot de passe incorrect")
+
+
         else:
             form = ConnexionForm()
-            DICTIO["form"] = form
+        DICTIO["form"] = form
 
         return render(request, 'users/login.html', DICTIO)
 
@@ -61,8 +81,20 @@ def disconnect_user(request):
     logout(request)
     return redirect("index")
 
+@login_required(login_url='/users/log_in/')
 def edit_profile(request):
     """ This function will display a template for user deletion"""
+    DICTIO = {
+        "change_info_temp":{
+            "welc_title": "Informations du compte",
+            "modif_one":"Vous pouvez changer les informations ci-dessous",
+            "apply_advert":"Pour appliquer les changements, veuillez appuyer sur \
+sur le bouton ci-dessous",
+            "passw":"changer password",
+            "confirm":"confirmer",
+        }
+    }
+
     try:
         if "passw" in request.POST:
             return redirect("change_password")
@@ -84,7 +116,14 @@ def edit_profile(request):
     except:
         raise Http404("Page not found")
 
+@login_required(login_url='/users/log_in/')
 def change_password(request):
+    DICTIO = {
+        "change_passw":{
+            "change_pass_title":"Changement de mot de passe",
+            "confirm_pass":"Confirmer",
+        }
+    }
 
     try:
         if request.method == "POST":
@@ -96,7 +135,8 @@ def change_password(request):
                 messages.success(request, "Votre mot de passe est mis à jour")
                 return redirect("change_password")
             else:
-                messages.error(request, "Mot de passe ou nouveau mot de passe incorrect")
+                DICTIO["form"] = form
+
         else:
             form = CustomUserChangePassword(request.user)
             DICTIO["form"] = form

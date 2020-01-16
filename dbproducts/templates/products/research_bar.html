@@ -2,11 +2,12 @@
 
 {% block content %}
 
-<form method="GET">
-
-    <input type="text" name="search" placeholder="Recherche"/>
-    <button type="submit"> Recherche </button>
-
+<form method="post">
+    {% csrf_token %}
+    <input id="your_name" type="text" name="your_name"> 
+    <input type="submit" value="OK">
 </form>
+
+<p> {{ form.product }}</p>
 
 {% endblock %}

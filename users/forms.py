@@ -4,14 +4,6 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Password
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
-    username = forms.CharField(label="Nom d'utilisateur",
-                               max_length=30,
-                               help_text="Le nom d'utilisateur contient 30 \
-                               caractères maximum. \
-                               Doit uniquement contenir \
-                               des lettres ou les symboles @/./+/-/_",
-                              )
-    email = forms.EmailField(label="Adresse mail")
 
     class Meta:
         model = CustomUser
@@ -26,14 +18,6 @@ class ConnexionForm(forms.Form):
         fields = ("username", "password")
 
 class CustomUserChangeForm(UserChangeForm):
-    username = forms.CharField(label="Nom d'utilisateur",
-                               max_length=30,
-                               help_text="Le nom d'utilisateur contient 30 \
-                               caractères maximum. \
-                               Doit uniquement contenir \
-                               des lettres ou les symboles @/./+/-/_",
-                              )
-    email = forms.EmailField(label="Adresse mail")
     class Meta:
         model = CustomUser
         fields = ('username', 'email',)
