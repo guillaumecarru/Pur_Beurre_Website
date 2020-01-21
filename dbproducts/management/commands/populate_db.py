@@ -97,7 +97,7 @@ class Command(BaseCommand):
                         sub_category = symbol_removal(num_sub_categories)
 
                         if sub_category in sub_cat:
-                            pass
+                            add_sub_cat = Category.objects.get(name=sub_category)
                         else:
                             sub_cat.append(sub_category)
                             add_sub_cat = Category.objects.create(name=sub_category)
