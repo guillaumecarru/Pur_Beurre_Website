@@ -5,18 +5,25 @@
 {{ prod_info_var.prod_title }}
 </h1>
 <p>
-<small style="color: grey"> {{ prod_info_var.specs.name }}
+<small style="color: grey">
+    {{ prod_info_var.specs.name }}
  </small>
 {{ info.product_name }}
-<img src={{ info.img_front_url }} alt="image du produit">
+<img src={{ info.img_front_url }} alt="image du produit" width=200px>
 
 </p>
 <p>
-{{ prod_info_var.specs.nutri_score }}
-<img src=  {{ info.img_nutrition_url }} alt="fiche produit">
+<small style="color: grey"> 
+    {{ prod_info_var.specs.nutri_score }}
+ </small>
+
+    <img src=  {{ info.img_nutrition_url }} alt="fiche produit" width=200px>
 </p>
 <p>
-{{ prod_info_var.specs.web }}
+<small style="color: grey">
+    {{ prod_info_var.specs.web }}
+</small>
+
 <a href={{ info.web_link }}>{{ prod_info_var.link_name }}</a>
 </p>
 

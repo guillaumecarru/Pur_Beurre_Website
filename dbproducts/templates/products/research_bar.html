@@ -4,10 +4,8 @@
 
 <form method="post">
     {% csrf_token %}
-    <input id="your_name" type="text" name="your_name"> 
+    <input id="product" type="text" name="product"> 
     <input type="submit" value="OK">
 </form>
-
-<p> {{ form.product }}</p>
 
 {% endblock %}

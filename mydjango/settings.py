@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'favorites.apps.FavoritesConfig',
     'dbproducts.apps.DbproductsConfig',
-    #si ca ne marche pas, regarder dans le fichier app de dbproducts, et
-    #favorites
+    # Settings for current apps
     'django_extensions',
 ]
 

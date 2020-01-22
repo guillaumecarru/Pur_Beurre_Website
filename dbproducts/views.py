@@ -3,8 +3,7 @@ from django.http import HttpResponse, HttpRequest
 from django.contrib.auth import logout
 from django.contrib import messages
 
-from .forms import ResearchProduct
-from dbproducts.models import *
+from dbproducts.models import Product
 
 # Index should be removed when main app will be added.
 def index(request):
@@ -14,11 +13,27 @@ def index(request):
     return render(request, "products/brief_index.html")
 
 def research_substitute(request):
-    formes = {}
+    DICTIO = {
+        "title":"Résultats de la recherche",
+        "info":{"old_product":"Produit actuel",
+                "result_info":"Voici les propositions de substituts",
+                "substitute":"Substitut",
+               },
+        "no_result":"Désolé, il n'y a pas de résultats pour ce produit"
+    }
+
     if request.method == "POST":
-        form = ResearchProduct(request.POST)
-        formes["form"] = form
-    return render(request, "products/research_bar.html", formes)
+        # Adding current product to DICTIO
+        info_old_prod = Product.objects.get(product_name=request.POST["product"])
+        DICTIO["old_prod"] = info_old_prod
+
+        # Adding substitutes to DICTIO
+        DICTIO["results"] = Product.objects.substitute(info_old_prod.product_name)
+
+        # Returns new html page, with substitutes condensed information
+        return render(request, "products/result_research.html", DICTIO)
+
+    return render(request, "products/research_bar.html")
 
 def detail(request, product_id):
     DICTIO = {

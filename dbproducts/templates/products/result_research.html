@@ -1,0 +1,35 @@
+{# this html file will display results of research bar from research_substitute view #}
+
+{% block content %}
+<h1>
+{{ title }}
+</h1>
+
+<p>
+<small style="color: grey">
+    {{ info.old_product }}
+ </small>
+{{ old_prod.product_name }}
+<img src={{ old_prod.img_front_url }} alt="image du produit" width=200px>
+</p>
+
+<p>
+{{ info.result_info }}
+</p>
+
+{# Displaying substitutes, will display information if no available #}
+{% for substitutes in results %} 
+  <p>
+    <small style="color: grey">
+      {{ info.substitute }}
+    </small>
+    {{ substitutes.product_name }}
+    
+    <img src={{ substitutes.img_front_url }} alt="image substitut" width=100px>
+  </p>
+
+{% empty %}
+<li> {{ no_result }}</li>
+{% endfor %}
+
+{% endblock %}

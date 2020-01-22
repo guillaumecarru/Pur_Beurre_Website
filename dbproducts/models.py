@@ -1,34 +1,17 @@
 from django.db import models
+from django.db.models import Count
 
 class ProductManager(models.Manager):
     def substitute(self, prod_name):
+        """ This function returns 6 different substitutes for 'prod_name'"""
+        product = Product.objects.get(product_name=prod_name)
+        prod = product.id
+        cat = Category.objects.filter(product__id=prod)
 
-        prod = Product.objects.get(product_name=prod_name)
-        # Writing request in sql first
-        from django.db import connection
-        with connection.cursor as cursor:
-            cursor.execute("""SELECT dbproducts_product_categories.product_id AS results
-                           FROM dbproducts_product_categories
-                           JOIN dbproducts_product
-                           ON dbproducts_product_categories.product_id =
-                           dbproducts_product.id
-                           JOIN dbproducts_category
-                           ON dbproducts_product_categories.category_id =
-                           dbproducts_category.id
-                           WHERE dbproducts_product_categories.category_id IN (
-                                SELECT dbproducts_product_categories.category_id FROM
-                                dbproducts_product_categories WHERE
-                                dbproducts_product_categories.product_id = {})
-                           AND dbproducts_product_categories.product_id != {}
-                           GROUP BY dbproducts_product_categories.product_id
-                           HAVING results >=1
-                           ORDER BY results DESC;
-                           """.format(prod, prod))
-            answer = []
-            for raw in cursor.fetchall():
-                answer.append(raw)
+        all_products = Product.objects.filter(categories__in=cat).annotate(num_cat=Count("categories")).distinct().exclude(id=prod).exclude(nutri_grade__gte=Product.objects.get(id=prod).nutri_grade).order_by('-num_cat')
+        # We can change later "gte" to "gt" for more product answers
 
-        return answer
+        return all_products[:6]
 
 
 class Category(models.Model):
