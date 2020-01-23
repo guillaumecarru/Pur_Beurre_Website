@@ -1,9 +1,19 @@
 <!-- this template displays product informations -->
 
 {% block content %}
+
 <h1>
 {{ prod_info_var.prod_title }}
 </h1>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <p>
 <small style="color: grey">
     {{ prod_info_var.specs.name }}
@@ -27,5 +37,11 @@
 <a href={{ info.web_link }}>{{ prod_info_var.link_name }}</a>
 </p>
 
+<form method="post">
+  {% csrf_token %}
+  
+  <button type="submit"> {{ prod_info_var.add_fav }}</button>
+
+</form>
 
 {% endblock %}

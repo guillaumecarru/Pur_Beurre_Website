@@ -19,7 +19,8 @@ def research_substitute(request):
                 "result_info":"Voici les propositions de substituts",
                 "substitute":"Substitut",
                },
-        "no_result":"Désolé, il n'y a pas de résultats pour ce produit"
+        "no_result":"Désolé, il n'y a pas de résultats pour ce produit",
+        "link_text":"Lien vers la page du produit"
     }
 
     if request.method == "POST":
@@ -35,9 +36,11 @@ def research_substitute(request):
 
     return render(request, "products/research_bar.html")
 
-def detail(request, product_id):
+def detail(request, product_id, prev_product=""):
+    """ product_id is given from dbproducts/urls.py
+    kwargs is given from template/products/result_research.py
+    kwargs is here used to give old product info """
     DICTIO = {
-        # Dictionnary file_info is meant for show_product.html page
         "prod_info_var":{
             "prod_title":"Informations du produit",
             "specs":{
@@ -46,8 +49,21 @@ def detail(request, product_id):
                 "web":"site web",
             },
             "link_name":"lien vers OpenFoodFacts",
+            "add_fav":"Ajouter favori"
         }
     }
+    if request.method == "POST":
+        if prev_product:
+            # Redirecting to favorites apps
+            info_fav = {}
+            info_fav["info"] = product_id
+            info_fav["old_prod"] = prev_product
+            return redirect("index")
+        else:
+            messages.error(request, "Le produit ne peut être ajouté car il \
+n'est pas le substitut d'un autre.")
+
+
     info_prod = Product.objects.get(id=product_id)
     DICTIO["info"] = info_prod
     return render(request, "products/show_product.html", DICTIO)

@@ -27,7 +27,10 @@
     
     <img src={{ substitutes.img_front_url }} alt="image substitut" width=100px>
   </p>
-
+  
+  <p>
+  <a href="{% url 'detail' substitutes.id old_prod.id %}">{{ link_text }}</a>
+  </p>
 {% empty %}
 <li> {{ no_result }}</li>
 {% endfor %}
