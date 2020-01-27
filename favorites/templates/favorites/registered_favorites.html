@@ -1,0 +1,31 @@
+{# This page is the template for consult_favorites view #}
+
+{% block content %}
+
+<h1>
+{{ title }}
+</h1>
+
+{% for product in favorites %}
+
+<p>
+<small style="color: grey">
+    {{ infos.old_prod }}
+ </small>
+{{ product.original_prod.product_name }}
+</p>
+
+<p>
+    <small style="color: grey">
+      {{ info.substitute }}
+    </small>
+    <a href="{% url 'detail' product.substitute.id %}">{{ product.substitute.product_name }}</a>
+    <img src={{ product.substitute.img_front_url }} alt="image substitut" width=100px>
+</p>
+{% empty %}
+<li>
+    {{ no_product }} 
+</li>
+{% endfor %}
+
+{% endblock %}

@@ -47,35 +47,27 @@ def log_in(request):
             "welc_title":"Se connecter",
             "err_connexion":"Utilisateur inconnu ou mauvais mot de passe",
             "button_connect":"Connexion",
-        },
+        },"redirect_url" : request.GET.get('next', "index"),
     }
 
-    try:
-        if request.method == "POST":
-            form = ConnexionForm(request.POST)
-            if form.is_valid():
-                username = form.cleaned_data["username"]
-                password = form.cleaned_data["password"]
-                user = authenticate(username=username, password=password)
-                if user:
-                    login(request, user)
-                    # For now, redirects to dbproducts (change later)
-                    redirect_url = request.GET.get('next')
-                    if redirect_url is None:
-                        redirect_url = "index"
-                    return redirect(redirect_url)
-                else:
-                    messages.error(request, " Utilisateur ou mot de passe incorrect")
+    if request.method == "POST":
+        form = ConnexionForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                # For now, redirects to dbproducts (change later)
+                return redirect(DICTIO["redirect_url"])
+            else:
+                messages.error(request, " Utilisateur ou mot de passe incorrect")
 
+    else:
+        form = ConnexionForm()
+    DICTIO["form"] = form
 
-        else:
-            form = ConnexionForm()
-        DICTIO["form"] = form
-
-        return render(request, 'users/login.html', DICTIO)
-
-    except:
-        raise Http404("Page not found")
+    return render(request, 'users/login.html', DICTIO)
 
 def disconnect_user(request):
     logout(request)

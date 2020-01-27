@@ -33,10 +33,9 @@ def research_substitute(request):
 
         # Returns new html page, with substitutes condensed information
         return render(request, "products/result_research.html", DICTIO)
-
     return render(request, "products/research_bar.html")
 
-def detail(request, product_id, prev_product=""):
+def detail(request, product_id):
     """ product_id is given from dbproducts/urls.py
     kwargs is given from template/products/result_research.py
     kwargs is here used to give old product info """
@@ -49,21 +48,10 @@ def detail(request, product_id, prev_product=""):
                 "web":"site web",
             },
             "link_name":"lien vers OpenFoodFacts",
-            "add_fav":"Ajouter favori"
         }
     }
-    if request.method == "POST":
-        if prev_product:
-            # Redirecting to favorites apps
-            info_fav = {}
-            info_fav["info"] = product_id
-            info_fav["old_prod"] = prev_product
-            return redirect("index")
-        else:
-            messages.error(request, "Le produit ne peut être ajouté car il \
-n'est pas le substitut d'un autre.")
-
 
     info_prod = Product.objects.get(id=product_id)
+    DICTIO["nutri_score"] = str(chr(info_prod.nutri_grade))
     DICTIO["info"] = info_prod
     return render(request, "products/show_product.html", DICTIO)

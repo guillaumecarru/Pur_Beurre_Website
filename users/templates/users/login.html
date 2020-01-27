@@ -10,7 +10,7 @@
 </ul>
 {% endif %}
 
-<form method="post" action=".">
+<form method="post" action="{% url 'log_in' %}?next={{ redirect_url }}">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value= {{ log_in_temp.button_connect }} />
