@@ -23,19 +23,20 @@
     <small style="color: grey">
       {{ info.substitute }}
     </small>
-    <a href="{% url 'detail' substitutes.id old_prod.id %}">{{ substitutes.product_name }}</a>
+    <a href="{% url 'detail' substitutes.id %}">{{ substitutes.product_name }}</a>
     <img src={{ substitutes.img_front_url }} alt="image substitut" width=100px>
    
     {# button for adding this substitute to favorites #}
-    <form action="/favorites/add_favorites/" method="post">
-        
-	{% csrf_token %}
-	<input name="prev_prod" type="hidden" value="{{ old_prod.id }}">
-	<input name="new_sub" type="hidden" value="{{ substitutes.id }}">
-	<button type="submit"> {{ prod_info_var.add_fav }}</button>
+    {% if user.is_authenticated %}
+        <form action="/favorites/add_favorites/" method="post">
+            
+            {% csrf_token %}
+            <input name="prev_prod" type="hidden" value="{{ old_prod.id }}">
+            <input name="new_sub" type="hidden" value="{{ substitutes.id }}">
+            <button type="submit"> {{ add_fav }}</button>
 
-    </form>
-
+        </form>
+    {% endif %}
   </p>
   
 {% empty %}

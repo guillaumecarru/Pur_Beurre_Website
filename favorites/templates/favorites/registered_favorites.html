@@ -22,10 +22,23 @@
     <a href="{% url 'detail' product.substitute.id %}">{{ product.substitute.product_name }}</a>
     <img src={{ product.substitute.img_front_url }} alt="image substitut" width=100px>
 </p>
+
 {% empty %}
 <li>
     {{ no_product }} 
 </li>
 {% endfor %}
 
+<div class="pagination">
+   {% if favorites.has_previous %}
+   <a href="{% url 'consult_favorites' favorites.previous_page_number %}">{{ previous }}</a> -
+   {% endif %}
+   <p>{{ favorites.next_page_number }}</p>
+   <span class="current">
+       Page {{ favorites.number }} {{ on }} {{ favorites.paginator.num_pages }}
+   </span>
+
+   {% if favorites.has_next %}
+   - <a href="{% url 'consult_favorites' favorites.next_page_number %}">{{ next }}</a>
+   {% endif %}
 {% endblock %}

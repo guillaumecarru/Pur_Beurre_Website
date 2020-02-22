@@ -13,4 +13,6 @@ urlpatterns = [
     path("edit_profile/change_password/", views.change_password, name="change_password"),
     # disconnect
     path("disconnect_user/", views.disconnect_user, name="disconnect_user"),
+    # user_informations
+    path("user_informations/", views.user_informations, name="user_informations"),
 ]

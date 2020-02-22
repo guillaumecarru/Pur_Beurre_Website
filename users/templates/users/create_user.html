@@ -22,6 +22,12 @@ huge thanks to them for making me understand how it works. -->
         {% endfor %}
     </p>
   {% endfor %}
+  {% if user.is_authenticated %}
+  <p> {{ create_user_temp.already_logged_in }} </p>
+  {% endif %}
+
+  {% if not user.is_authenticated %}
   <button type="submit">{{ create_user_temp.confirm }}</button>
+  {% endif %}
 </form>
 {% endblock %}

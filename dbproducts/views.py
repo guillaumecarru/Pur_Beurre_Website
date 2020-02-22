@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from django.contrib.auth import logout
 from django.contrib import messages
-
+from django.utils.datastructures import MultiValueDictKeyError
+from django.core.exceptions import ObjectDoesNotExist
 from dbproducts.models import Product
 
 # Index should be removed when main app will be added.
@@ -20,20 +21,28 @@ def research_substitute(request):
                 "substitute":"Substitut",
                },
         "no_result":"Désolé, il n'y a pas de résultats pour ce produit",
-        "link_text":"Lien vers la page du produit"
+        "link_text":"Lien vers la page du produit",
+        "add_fav":"sauvegarder",
     }
+    try:
+        if request.GET["product"]:
+            try:
+                # Adding current product to DICTIO
+                info_old_prod = Product.objects.get(product_name=request.GET["product"])
+                DICTIO["old_prod"] = info_old_prod
 
-    if request.method == "POST":
-        # Adding current product to DICTIO
-        info_old_prod = Product.objects.get(product_name=request.POST["product"])
-        DICTIO["old_prod"] = info_old_prod
+                # Adding substitutes to DICTIO
+                DICTIO["results"] = Product.objects.substitute(info_old_prod.product_name)
 
-        # Adding substitutes to DICTIO
-        DICTIO["results"] = Product.objects.substitute(info_old_prod.product_name)
-
-        # Returns new html page, with substitutes condensed information
-        return render(request, "products/result_research.html", DICTIO)
-    return render(request, "products/research_bar.html")
+                # Returns new html page, with substitutes condensed information
+                return render(request, "products/result_research.html", DICTIO)
+            except ObjectDoesNotExist:
+                # For now, redirects to Dbproducts; redirects somewhere else
+                # later on
+                messages.error(request, "Vous avez entré un produit non répertorié")
+                return redirect("index")
+    except MultiValueDictKeyError:
+        return render(request, "products/research_bar.html")
 
 def detail(request, product_id):
     """ product_id is given from dbproducts/urls.py

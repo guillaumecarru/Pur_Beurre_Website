@@ -13,6 +13,8 @@ def create_user(request):
                     "welc_title":"Bienvenue sur la page d'inscription",
                     "temp_one":"Veuillez remplir ce formulaire pour vous inscrire",
                     "confirm":"Confirmer",
+                    "already_logged_in":"Vous êtes déjà connecté en tant \
+qu'utilisateur, vous ne pouvez pas créer un autre compte pour le moment.",
                 }
     }
 
@@ -138,3 +140,21 @@ def change_password(request):
                      )
     except:
         raise Http404("Page not found")
+
+@login_required(login_url='/users/log_in/')
+def user_informations(request):
+    DICTIO = {
+        "consult_button":"Mon profil",
+        "title_profile":"Profil de l'utilisateur",
+    }
+    if request.method == "POST":
+        DICTIO["user"] = request.user
+        return render(request,
+                      "users/user_informations.html",
+                      DICTIO,
+                     )
+
+    return render(request,
+                  "users/consult_user_informations.html",
+                  DICTIO,
+                 )

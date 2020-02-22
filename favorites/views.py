@@ -4,12 +4,11 @@ from django.contrib.auth import authenticate
 
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.core.paginator import Paginator, EmptyPage
 from django.contrib import messages
 from favorites.models import Favorites
 from dbproducts.models import Product
 
-
-@login_required(login_url='/users/log_in/')
 def add_favorites(request):
     """ Redirected to this function, user will add the favorite to its list if
     he is connected"""
@@ -41,12 +40,26 @@ def add_favorites(request):
         return render(request, "favorites/add_favorites.html", DICTIO)
 
 @login_required(login_url='/users/log_in/')
-def consult_favorites(request):
+def button_favorites(request):
+    """Button that user clicks on to consult his favorites (see
+    consult_favorites view below for more informations"""
+    DICTIO = {
+        "button_fav":"favoris",
+    }
+    if request.method == "POST":
+        return redirect("/favorites/consult_favorites/")
+    return render(request, "favorites/button_favorites.html", DICTIO)
+
+@login_required(login_url='/users/log_in/')
+def consult_favorites(request, page=1):
     """Allows user to consult his favorites"""
     DICTIO = {
         "title":"Page de favoris",
+        "next":"Suivant",
+        "previous":"Précédent",
         "button_fav":"favoris",
         "no_product":"Vous n'avez pas encore de favoris",
+        "on":"sur",
         "infos":{
             "old_prod":"Produit substitué",
             "substitute":"Substitut",
@@ -55,6 +68,13 @@ def consult_favorites(request):
     if request.method == "POST":
         current_user = request.user
         user_favorites = Favorites.objects.filter(user=current_user)
-        DICTIO["favorites"] = user_favorites
+        paginator = Paginator(user_favorites, 6)
+
+        try:
+            favorites_page = paginator.page(page)
+        except EmptyPage:
+            favorites_page = paginator.page(paginator.num_pages)
+        DICTIO["favorites"] = favorites_page
+
         return render(request, "favorites/registered_favorites.html", DICTIO)
     return render(request, "favorites/button_favorites.html", DICTIO)

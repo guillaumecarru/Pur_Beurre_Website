@@ -1,0 +1,10 @@
+{# This file is required for the user informations view #}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value={{ consult_button }}>
+</form>
+
+{% endblock %}
