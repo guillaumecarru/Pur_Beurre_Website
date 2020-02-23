@@ -29,16 +29,20 @@
 </li>
 {% endfor %}
 
+
 <div class="pagination">
    {% if favorites.has_previous %}
    <a href="{% url 'consult_favorites' favorites.previous_page_number %}">{{ previous }}</a> -
    {% endif %}
-   <p>{{ favorites.next_page_number }}</p>
+   
+   {% if favorites.has_previous or favorites.has_next  %}
    <span class="current">
        Page {{ favorites.number }} {{ on }} {{ favorites.paginator.num_pages }}
    </span>
+   {% endif %}
 
    {% if favorites.has_next %}
    - <a href="{% url 'consult_favorites' favorites.next_page_number %}">{{ next }}</a>
    {% endif %}
+
 {% endblock %}

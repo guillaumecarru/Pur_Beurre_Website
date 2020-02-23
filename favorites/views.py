@@ -57,7 +57,6 @@ def consult_favorites(request, page=1):
         "title":"Page de favoris",
         "next":"Suivant",
         "previous":"Précédent",
-        "button_fav":"favoris",
         "no_product":"Vous n'avez pas encore de favoris",
         "on":"sur",
         "infos":{
@@ -65,16 +64,14 @@ def consult_favorites(request, page=1):
             "substitute":"Substitut",
         }
     }
-    if request.method == "POST":
-        current_user = request.user
-        user_favorites = Favorites.objects.filter(user=current_user)
-        paginator = Paginator(user_favorites, 6)
+    current_user = request.user
+    user_favorites = Favorites.objects.filter(user=current_user)
+    paginator = Paginator(user_favorites, 6)
 
-        try:
-            favorites_page = paginator.page(page)
-        except EmptyPage:
-            favorites_page = paginator.page(paginator.num_pages)
-        DICTIO["favorites"] = favorites_page
+    try:
+        favorites_page = paginator.page(page)
+    except EmptyPage:
+        favorites_page = paginator.page(paginator.num_pages)
+    DICTIO["favorites"] = favorites_page
 
-        return render(request, "favorites/registered_favorites.html", DICTIO)
-    return render(request, "favorites/button_favorites.html", DICTIO)
+    return render(request, "favorites/registered_favorites.html", DICTIO)
