@@ -7,10 +7,6 @@ urlpatterns = [
     path("create_user/", views.create_user, name="create_user"),
     # log user
     path("log_in/", views.log_in, name="log_in"),
-    # edit user
-    path("edit_profile/", views.edit_profile, name="edit_profile"),
-    # modify password
-    path("edit_profile/change_password/", views.change_password, name="change_password"),
     # disconnect
     path("disconnect_user/", views.disconnect_user, name="disconnect_user"),
     # user_informations
