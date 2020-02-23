@@ -1,0 +1,29 @@
+{# This template is the hostpage of PurBeurre Website #}
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+{% endfor %}
+
+<h1>
+    {{ title }}
+</h1>
+
+<h2>
+    {{ help_substitute }}
+</h2>
+
+<h2>
+    {{ name }}
+</h2>
+<p>
+{{ history }}
+</p>
+<h2>
+    {{ contact }}
+</h2>
+
+{% endblock %}
