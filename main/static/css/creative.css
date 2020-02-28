@@ -3930,8 +3930,8 @@ input[type="button"].btn-block {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #f4623a;
+  color: #345A61;
+  background-color: #345A61;
 }
 
 .nav-fill .nav-item {

@@ -49,7 +49,7 @@ def log_in(request):
             "welc_title":"Se connecter",
             "err_connexion":"Utilisateur inconnu ou mauvais mot de passe",
             "button_connect":"Connexion",
-        },"redirect_url" : request.GET.get('next', "index"),
+        },"redirect_url" : request.GET.get('next', "homepage"),
     }
 
     if request.method == "POST":
