@@ -46,6 +46,8 @@ def log_in(request):
     """ This function will display a template for user identification"""
     DICTIO = {
         "log_title":"Connexion",
+        "text_create_acc":"Pas de compte ? Vous pouvez en créer un !",
+        "create_acc":"Inscription",
         "log_in_temp":{
             "welc_title":"Se connecter",
             "err_connexion":"Utilisateur inconnu ou mauvais mot de passe",

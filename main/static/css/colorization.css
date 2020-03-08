@@ -237,3 +237,8 @@
  color: white;
  border-radius: 50%;
 }
+
+/* style for log_in view */
+.log-style {
+    background-color:#C45525;
+}
