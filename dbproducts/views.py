@@ -15,11 +15,9 @@ def index(request):
 
 def research_substitute(request):
     DICTIO = {
-        "title":"Résultats de la recherche",
-        "info":{"old_product":"Produit actuel",
-                "result_info":"Voici les propositions de substituts",
-                "substitute":"Substitut",
-               },
+        "research_title":"Résultats de recherche",
+        "title":"Résultats de la recherche pour : ",
+        "name":"Vous pouvez remplacer cet aliment par",
         "no_result":"Désolé, il n'y a pas de résultats pour ce produit",
         "link_text":"Lien vers la page du produit",
         "add_fav":"sauvegarder",
@@ -40,9 +38,9 @@ def research_substitute(request):
                 # For now, redirects to Dbproducts; redirects somewhere else
                 # later on
                 messages.error(request, "Vous avez entré un produit non répertorié")
-                return redirect("index")
+                return redirect("homepage")
     except MultiValueDictKeyError:
-        return render(request, "products/research_bar.html")
+        return render(request, "main/main.html")
 
 def detail(request, product_id):
     """ product_id is given from dbproducts/urls.py

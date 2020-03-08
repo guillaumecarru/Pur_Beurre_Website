@@ -1,47 +1,62 @@
 {# this html file will display results of research bar from research_substitute view #}
 
-{% block content %}
-<h1>
-{{ title }}
-</h1>
+{# imports template #}
+{% extends 'index.html' %}
 
-<p>
-<small style="color: grey">
-    {{ info.old_product }}
- </small>
-{{ old_prod.product_name }}
-<img src={{ old_prod.img_front_url }} alt="image du produit" width=200px>
-</p>
+{# changes title of the page #}
+{% block title %}
+{{ research_title }}
+{% endblock %}
 
-<p>
-{{ info.result_info }}
-</p>
+{# This block will display old product informations #}
+{% block header %}
+<header class="header-product">
+ <img src={{ old_prod.img_front_url }} width="1500" height="300" class="header-product-image">
+ <h3 class="header-product-title">{{ title }}{{ old_prod.product_name|truncatechars:"35" }}</h3>
+</header>
+{% endblock %}
 
-{# Displaying substitutes, will display information if no available #}
-{% for substitutes in results %} 
-  <p>
-    <small style="color: grey">
-      {{ info.substitute }}
-    </small>
-    {# Added truncatewords:100 #}
-    <a href="{% url 'detail' substitutes.id %}">{{ substitutes.product_name|truncatewords:"100" }}</a>
-    <img src={{ substitutes.img_front_url }} alt="image substitut" width=100px>
-   
-    {# button for adding this substitute to favorites #}
-    {% if user.is_authenticated %}
-        <form action="/favorites/add_favorites/" method="post">
-            
-            {% csrf_token %}
-            <input name="prev_prod" type="hidden" value="{{ old_prod.id }}">
-            <input name="new_sub" type="hidden" value="{{ substitutes.id }}">
-            <button type="submit"> {{ add_fav }}</button>
+{# This block will display all results for the research #}
+{% block contact %}
 
-        </form>
-    {% endif %}
-  </p>
-  
-{% empty %}
-<li> {{ no_result }}</li>
-{% endfor %}
+<section class="page-section" id="services">
+    <div class="container">
+      <h2 class="text-center mt-0">{{ name }}</h2>
+      <hr class="divider my-4">
 
+      <div class="row">
+      {% for substitute in results %}
+        <div class="col-lg-4 col-sm-6">
+          <div class="result">
+          <div class="result-image">
+            <img src={{ substitute.img_front_url }} class="product-image">
+
+            <div class="product-nutriscore">{{ substitute.nutri_grade }}</div>
+          </div>
+          
+          <a title={{ substitute.product_name }} href="{% url 'detail' substitute.id %}">{{ substitute.product_name|truncatechars:"18" }}</a>
+
+          {# button for adding this substitute to favorites #}
+          {% if user.is_authenticated %}
+          <form action="/favorites/add_favorites/" method="post">
+              {% csrf_token %}
+              <input name="prev_prod" type="hidden" value="{{ old_prod.id }}">
+              <input name="new_sub" type="hidden" value="{{ substitute.id }}">
+
+              <div class="col-md-4 text-center"> 
+                  <button type="submit" class="btn btn-primary">{{ add_fav }}</button> 
+              </div>
+          </form>
+          {% endif %}
+
+          </div>
+        </div>
+
+        {# if there's no results #}
+        {% empty %}
+        <li> {{ no_result }}</li>
+        {% endfor %}
+      </div>
+    </div>
+</section>
 {% endblock %}

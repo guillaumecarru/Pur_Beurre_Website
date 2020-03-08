@@ -45,6 +45,7 @@ qu'utilisateur, vous ne pouvez pas créer un autre compte pour le moment.",
 def log_in(request):
     """ This function will display a template for user identification"""
     DICTIO = {
+        "log_title":"Connexion",
         "log_in_temp":{
             "welc_title":"Se connecter",
             "err_connexion":"Utilisateur inconnu ou mauvais mot de passe",
@@ -60,7 +61,6 @@ def log_in(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                # For now, redirects to dbproducts (change later)
                 return redirect(DICTIO["redirect_url"])
             else:
                 messages.error(request, " Utilisateur ou mot de passe incorrect")
@@ -72,8 +72,10 @@ def log_in(request):
     return render(request, 'users/login.html', DICTIO)
 
 def disconnect_user(request):
-    logout(request)
-    return redirect("index")
+    if request.user.is_authenticated:
+        messages.success(request, "Vous êtes déconnecté")
+        logout(request)
+    return redirect("homepage")
 
 @login_required(login_url='/users/log_in/')
 def user_informations(request):
