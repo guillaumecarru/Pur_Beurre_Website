@@ -46,7 +46,9 @@
 	  
       	{# Research bar #} 
 	  <li class="nav-item">
-        {% include 'products/research_bar.html' %}
+        <form method="get" action="/dbproducts/research_substitute/">
+            <input id="product" type="text" name="product"> 
+        </form>
           </li>
 
 	  {# My Account #}

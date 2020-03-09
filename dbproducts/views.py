@@ -6,13 +6,6 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.core.exceptions import ObjectDoesNotExist
 from dbproducts.models import Product
 
-# Index should be removed when main app will be added.
-def index(request):
-    if "disco" in request.POST:
-        messages.success(request, "You are disconnected")
-        logout(request)
-    return render(request, "products/brief_index.html")
-
 def research_substitute(request):
     DICTIO = {
         "research_title":"Résultats de recherche",
@@ -35,8 +28,6 @@ def research_substitute(request):
                 # Returns new html page, with substitutes condensed information
                 return render(request, "products/result_research.html", DICTIO)
             except ObjectDoesNotExist:
-                # For now, redirects to Dbproducts; redirects somewhere else
-                # later on
                 messages.error(request, "Vous avez entré un produit non répertorié")
                 return redirect("homepage")
     except MultiValueDictKeyError:

@@ -58,9 +58,9 @@ interdites.",
 informations vous concernant,",
         "p4_3":"veuillez-vous adresser par email à : purbeurre@gmail.com",
         "name":"Copyrights",
-        "icons_copy":"Icons used in this website are owned by FontAwesome&copy. \
+        "icons_copy":"Icons used in this website are owned by FontAwesome©. \
 Do not reproduce.",
-        "photo_copy":"Main page image is owned by Ubon Ratchathani&copy. Do not \
+        "photo_copy":"Main page image is owned by Ubon Ratchathani©. Do not \
 reproduce.",
     }
 
