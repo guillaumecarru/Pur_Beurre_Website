@@ -9,6 +9,7 @@ from users.forms import CustomUserCreationForm, ConnexionForm, CustomUserChangeF
 def create_user(request):
     """ This function will be used to display a template for user creation"""
     DICTIO = {
+        "create_title":"Création de compte",
                 "create_user_temp":{
                     "welc_title":"Bienvenue sur la page d'inscription",
                     "temp_one":"Veuillez remplir ce formulaire pour vous inscrire",
@@ -18,29 +19,26 @@ qu'utilisateur, vous ne pouvez pas créer un autre compte pour le moment.",
                 }
     }
 
-    try:
-        if request.method == 'POST':
-            form = CustomUserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password1')
-                user = authenticate(username=username, password=raw_password)
-                login(request, user)
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
 
-                # For now, redirects to dbproducts (change later)
-                return redirect('index')
-            else:
-                DICTIO["form"] = form
-
+            messages.success(request, "Votre Compte est maintenant créé")
+            return redirect('homepage')
         else:
-            form = CustomUserCreationForm()
             DICTIO["form"] = form
-        return render(request, "users/create_user.html",
-                      DICTIO,
-                     )
-    except:
-        raise Http404("Page not found")
+
+    else:
+        form = CustomUserCreationForm()
+        DICTIO["form"] = form
+    return render(request, "users/create_user.html",
+                  DICTIO,
+                 )
 
 def log_in(request):
     """ This function will display a template for user identification"""
@@ -82,17 +80,14 @@ def disconnect_user(request):
 @login_required(login_url='/users/log_in/')
 def user_informations(request):
     DICTIO = {
-        "consult_button":"Mon profil",
+        "consult_title":"Mon profil",
         "title_profile":"Profil de l'utilisateur",
+        "username":"Identifiant",
+        "info_user":"Profil de l'utilisateur",
+        "name":"Adresse mail",
     }
-    if request.method == "POST":
-        DICTIO["user"] = request.user
-        return render(request,
-                      "users/user_informations.html",
-                      DICTIO,
-                     )
-
+    DICTIO["user"] = request.user
     return render(request,
-                  "users/consult_user_informations.html",
+                  "users/user_informations.html",
                   DICTIO,
                  )

@@ -15,7 +15,6 @@ def add_favorites(request):
     DICTIO = {
         "error_msg":"Vous avez déjà ajouté ce produit aux favoris",
         "valid_add":"Produit ajouté",
-        "title":"Ajout aux favoris",
         "err_product":"Ne marche pas",
     }
     if request.method == "POST":
@@ -37,7 +36,7 @@ def add_favorites(request):
         else:
             messages.error(request, DICTIO["error_msg"])
 
-        return render(request, "favorites/add_favorites.html", DICTIO)
+        return render(request, "main/main.html", DICTIO)
 
 @login_required(login_url='/users/log_in/')
 def button_favorites(request):
