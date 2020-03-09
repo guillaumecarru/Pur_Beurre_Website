@@ -47,15 +47,10 @@ def detail(request, product_id):
     kwargs is given from template/products/result_research.py
     kwargs is here used to give old product info """
     DICTIO = {
-        "prod_info_var":{
-            "prod_title":"Informations du produit",
-            "specs":{
-                "name":"Nom du produit",
-                "nutri_score":"informations nutritionnelles",
-                "web":"site web",
-            },
-            "link_name":"lien vers OpenFoodFacts",
-        }
+        "title":"Page de Produit",
+        "nutriscore":"Nutriscore",
+        "name":"lien vers OpenFoodFacts",
+        "link_off":"Voir la fiche d'OpenFoodFacts",
     }
 
     info_prod = Product.objects.get(id=product_id)

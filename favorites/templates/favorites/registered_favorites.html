@@ -1,14 +1,65 @@
 {# This page is the template for consult_favorites view #}
+{% extends 'index.html' %}
 
-{% block content %}
+{% block title %}{{ consult_fav_title }}{% endblock%}
 
-<h1>
-{{ title }}
-</h1>
+{% block header %}
+<header class="header-product">
+ {% load static %}
+ <img src="{% static "img/bg-masthead.jpg" %}" width="1500" height="300" class="header-product-image">
+ <h3 class="header-product-title">{{ title }}</h3>
+</header>
+{% endblock %}
 
-{% for product in favorites %}
+{% block contact %}
 
-<p>
+<section class="page-section" id="services">
+    <div class="container">
+      <h2 class="text-center mt-0">{{ name }}</h2>
+      <hr class="divider my-4">
+
+      <div class="row">
+        {% for product in favorites %}
+        <div class="col-lg-4 col-sm-6">
+          <div class="result">
+          <div class="result-image">
+            <img src={{ product.substitute.img_front_url }} class="product-image">
+
+            <div class="product-nutriscore">{{ product.substitute.nutri_grade }}</div>
+          </div>
+          
+          <a title={{ product.substitute.product_name }} href="{% url 'detail' product.substitute.id %}">{{ product.substitute.product_name|truncatechars:"18" }}</a>
+
+
+          </div>
+        </div>
+        {# if there's no results #}
+        {% empty %}
+        <li> {{ no_product }}</li>
+        {% endfor %}
+      </div>
+        </div>
+    <div class="pagination">
+       {% if favorites.has_previous %}
+       <a href="{% url 'consult_favorites' favorites.previous_page_number %}">{{ previous }}</a> -
+       {% endif %}
+       
+       {% if favorites.has_previous or favorites.has_next  %}
+       <span class="current">
+           Page {{ favorites.number }} {{ on }} {{ favorites.paginator.num_pages }}
+       </span>
+       {% endif %}
+
+       {% if favorites.has_next %}
+       - <a href="{% url 'consult_favorites' favorites.next_page_number %}">{{ next }}</a>
+       {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{# Do i need to also put informations of the old product ? #}
+
+{#<p>
 <small style="color: grey">
     {{ infos.old_prod }}
  </small>
@@ -22,27 +73,4 @@
     <a href="{% url 'detail' product.substitute.id %}">{{ product.substitute.product_name }}</a>
     <img src={{ product.substitute.img_front_url }} alt="image substitut" width=100px>
 </p>
-
-{% empty %}
-<li>
-    {{ no_product }} 
-</li>
-{% endfor %}
-
-
-<div class="pagination">
-   {% if favorites.has_previous %}
-   <a href="{% url 'consult_favorites' favorites.previous_page_number %}">{{ previous }}</a> -
-   {% endif %}
-   
-   {% if favorites.has_previous or favorites.has_next  %}
-   <span class="current">
-       Page {{ favorites.number }} {{ on }} {{ favorites.paginator.num_pages }}
-   </span>
-   {% endif %}
-
-   {% if favorites.has_next %}
-   - <a href="{% url 'consult_favorites' favorites.next_page_number %}">{{ next }}</a>
-   {% endif %}
-
-{% endblock %}
+#}  

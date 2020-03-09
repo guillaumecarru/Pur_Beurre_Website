@@ -1,34 +1,41 @@
 <!-- this template displays product informations -->
+{# This block will change title of the page #}
+{% extends 'index.html' %}
 
-{% block content %}
+{% block title %} {{ title }} {% endblock %}
 
-<h1>
-{{ prod_info_var.prod_title }}
-</h1>
+{# This block will display product's informations #}
+{% block header %}
+<header class="header-product">
+ <img src={{ info.img_front_url }} width="1500" height="300" class="header-product-image">
+ <h3 class="header-product-title">{{ info.product_name|truncatechars:"35" }}</h3>
+</header>
+{% endblock %}
 
-<p>
-<small style="color: grey">
-    {{ prod_info_var.specs.name }}
- </small>
-{{ info.product_name }}
-<img src={{ info.img_front_url }} alt="image du produit" width=200px>
+{# This block displays nutriscore and a link to OpenFoodFacts #}
+{% block contact %}
+<section class="page-section">
+<div class="container">
+  <div class="row">
 
-</p>
-<p>
-<small style="color: grey"> 
-    {{ prod_info_var.specs.nutri_score }}
- </small>
+    <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
+        <div>{{ nutriscore }}</div>
+      <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ nutri_score }}.svg" alt="nutri_score">
+    </div>
 
-    <img src=  {{ info.img_nutrition_url }} alt="fiche produit" width=200px>
-</p>
-<p>
-<small style="color: grey">
-    {{ prod_info_var.specs.web }}
-</small>
+    <div class="col-lg-4 mr-auto text-center">
+      <img src={{ info.img_nutrition_url }} width="400" height="150">
+    </div>
+  </div>
 
-<a href={{ info.web_link }}>{{ prod_info_var.link_name }}</a>
-</p>
+  <div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+      <hr class="divider my-4">
+      <a href={{ info.web_link}} class="btn btn-info" role="button">{{ link_off }}</a>
+    </div>
+  </div>
 
-<img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ nutri_score }}.svg" alt="nutri_score">
+</div>
+</section>
 
 {% endblock %}

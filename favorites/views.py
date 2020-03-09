@@ -39,21 +39,12 @@ def add_favorites(request):
         return render(request, "main/main.html", DICTIO)
 
 @login_required(login_url='/users/log_in/')
-def button_favorites(request):
-    """Button that user clicks on to consult his favorites (see
-    consult_favorites view below for more informations"""
-    DICTIO = {
-        "button_fav":"favoris",
-    }
-    if request.method == "POST":
-        return redirect("/favorites/consult_favorites/")
-    return render(request, "favorites/button_favorites.html", DICTIO)
-
-@login_required(login_url='/users/log_in/')
 def consult_favorites(request, page=1):
     """Allows user to consult his favorites"""
     DICTIO = {
+        "consult_fav_title":"Favoris",
         "title":"Page de favoris",
+        "name":"Mes favoris",
         "next":"Suivant",
         "previous":"Précédent",
         "no_product":"Vous n'avez pas encore de favoris",
