@@ -22,24 +22,29 @@ def research_substitute(request):
             try:
                 # Adding current product to DICTIO
                 info_old_prod = Product.objects.get(product_name=request.GET["txtSearch"])
-
                 DICTIO["old_prod"] = info_old_prod
-                # Adding substitutes to DICTIO
-                DICTIO["results"] = Product.objects.substitute(info_old_prod.product_name)
 
+                # Adding substitutes to DICTIO
+                DICTIO["results"] = Product.objects.substitute(info_old_prod)
+
+                #Creates var that changes the img, with better definition
+                DICTIO["header_image_url"]=info_old_prod.img_front_url.replace("400", "full")
                 # Returns new html page, with substitutes condensed information
                 return render(request, "products/result_research.html", DICTIO)
+
             except ObjectDoesNotExist:
                 messages.error(request, "Vous avez entré un produit non répertorié")
                 return redirect("homepage")
-            #Problème comprends pas
-            # Rillettes de thon
+
             except MultipleObjectsReturned:
                 info_old_prod = Product.objects.filter(product_name=request.GET["txtSearch"]).first()
-
                 DICTIO["old_prod"] = info_old_prod
+
+                #Creates var that changes the img, with better definition
+                DICTIO["header_image_url"]=info_old_prod.img_front_url.replace("400", "full")
+
                 # Adding substitutes to DICTIO
-                DICTIO["results"] = Product.objects.substitute(info_old_prod.product_name)
+                DICTIO["results"] = Product.objects.substitute(info_old_prod)
 
                 # Returns new html page, with substitutes condensed information
                 return render(request, "products/result_research.html", DICTIO)
@@ -64,6 +69,7 @@ def detail(request, product_id):
     info_prod = Product.objects.get(id=product_id)
     DICTIO["nutri_score"] = str(chr(info_prod.nutri_grade))
     DICTIO["info"] = info_prod
+    DICTIO["header_image_url"]=info_prod.img_front_url.replace("400", "full") 
     return render(request, "products/show_product.html", DICTIO)
 
 # view that will autocomplete the research bar

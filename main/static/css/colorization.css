@@ -210,3 +210,6 @@
     object-fit: cover;
     object-position: 50% 50%;
 }
+
+/* Allows autocompletion nav bar to be infront of navbar color */
+.ui-autocomplete { z-index:2000 !important; }

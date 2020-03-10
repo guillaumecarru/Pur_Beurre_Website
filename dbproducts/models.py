@@ -2,9 +2,8 @@ from django.db import models
 from django.db.models import Count
 
 class ProductManager(models.Manager):
-    def substitute(self, prod_name):
+    def substitute(self, product):
         """ This function returns 6 different substitutes for 'prod_name'"""
-        product = Product.objects.get(product_name=prod_name)
         prod = product.id
         cat = Category.objects.filter(product__id=prod)
 
