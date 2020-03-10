@@ -1,10 +1,12 @@
 <!-- Research bar for substitutes -->
 
+
 {% block content %}
+{# Script for search function #}
+</script>
 
-<form method="get" action="/dbproducts/research_substitute/">
-    <input id="product" type="text" name="product"> 
-    <input type="submit" value="OK">
+<form id=”search” method="get" action="{% url 'research_substitute' %}">
+    <input id="txtSearch" class=”form-control” type="text" name="txtSearch"> 
+    <button type="submit" class="btn btn-dark btn-submit">OK</button>
 </form>
-
 {% endblock %}

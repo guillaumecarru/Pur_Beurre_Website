@@ -10,10 +10,11 @@
 
 {# This block will display old product informations #}
 {% block header %}
-<header class="header-product">
- <img src={{ old_prod.img_front_url }} width="1500" height="300" class="header-product-image">
- <h3 class="header-product-title">{{ title }}{{ old_prod.product_name|truncatechars:"35" }}</h3>
-</header>
+
+<div class="container-header">
+  <img src={{ old_prod.img_front_url }} alt="Snow" style="width:100%;" height="300" width="1500" class="header-image">
+  <div class="centered"><h5>{{ title }}{{ old_prod.product_name|truncatechars:"35" }}</h5></div>
+</div>
 {% endblock %}
 
 {# This block will display all results for the research #}
@@ -31,7 +32,7 @@
           <div class="result-image">
             <img src={{ substitute.img_front_url }} class="product-image">
 
-            <div class="product-nutriscore">{{ substitute.nutri_grade }}</div>
+            <div class="product-nutriscore">&#{{ substitute.nutri_grade }};</div>
           </div>
           
           <a title={{ substitute.product_name }} href="{% url 'detail' substitute.id %}">{{ substitute.product_name|truncatechars:"18" }}</a>

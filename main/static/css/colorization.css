@@ -242,3 +242,31 @@
 .log-style {
     background-color:#C45525;
 }
+
+/* changing header. Below are new ones. */
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* Container holding the image and the text */
+.container-header {
+  position: relative;
+  text-align: center;
+  color: white;
+  max-width: 100%;
+  padding: 1em;
+}
+.container-header > img {
+  width: 100%;
+}
+.header-image {
+    height: 200px;
+    width: 1200px;
+    object-fit: cover;
+    object-position: 50% 50%;
+}

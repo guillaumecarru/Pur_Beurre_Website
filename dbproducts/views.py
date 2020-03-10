@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, JsonResponse
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from dbproducts.models import Product
+
+import json
 
 def research_substitute(request):
     DICTIO = {
@@ -16,12 +18,12 @@ def research_substitute(request):
         "add_fav":"sauvegarder",
     }
     try:
-        if request.GET["product"]:
+        if request.GET["txtSearch"]:
             try:
                 # Adding current product to DICTIO
-                info_old_prod = Product.objects.get(product_name=request.GET["product"])
-                DICTIO["old_prod"] = info_old_prod
+                info_old_prod = Product.objects.get(product_name=request.GET["txtSearch"])
 
+                DICTIO["old_prod"] = info_old_prod
                 # Adding substitutes to DICTIO
                 DICTIO["results"] = Product.objects.substitute(info_old_prod.product_name)
 
@@ -30,6 +32,21 @@ def research_substitute(request):
             except ObjectDoesNotExist:
                 messages.error(request, "Vous avez entré un produit non répertorié")
                 return redirect("homepage")
+            #Problème comprends pas
+            # Rillettes de thon
+            except MultipleObjectsReturned:
+                info_old_prod = Product.objects.filter(product_name=request.GET["txtSearch"]).first()
+
+                DICTIO["old_prod"] = info_old_prod
+                # Adding substitutes to DICTIO
+                DICTIO["results"] = Product.objects.substitute(info_old_prod.product_name)
+
+                # Returns new html page, with substitutes condensed information
+                return render(request, "products/result_research.html", DICTIO)
+
+        else:
+            messages.error(request, "Vous avez entré un produit non répertorié")
+            return redirect("homepage")
     except MultiValueDictKeyError:
         return render(request, "main/main.html")
 
@@ -48,3 +65,10 @@ def detail(request, product_id):
     DICTIO["nutri_score"] = str(chr(info_prod.nutri_grade))
     DICTIO["info"] = info_prod
     return render(request, "products/show_product.html", DICTIO)
+
+# view that will autocomplete the research bar
+def autocompleteModel(request):
+    term = request.GET.get("term")
+    products = Product.objects.filter(name__icontains=term)[:2]
+    products_list = [product.name for product in products]
+    return JsonResponse(products_list, safe=False)

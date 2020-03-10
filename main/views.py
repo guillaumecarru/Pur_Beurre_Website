@@ -19,7 +19,8 @@ utiliser les informations ci-dessous.",
         "number":"+(33) 1 47 43 57 512",
         "mail":"purbeurre@gmail.com",
     }
-
+    answer = request.GET.get("txtSearch")
+    print(answer)
     return render(request, 'main/main.html', DICTIO)
 
 def copyright(request):

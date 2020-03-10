@@ -18,14 +18,15 @@
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
   <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
- 
+
+  {# autocomplete link #}
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
   <!-- Plugin CSS -->
   <link href="{% static 'vendor/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
 
   <!-- Theme CSS - Includes Bootstrap -->
   {# Removed creative, colorization inherites from it #}
   <link href="{% static 'css/colorization.css' %}" rel="stylesheet">
-
 
 </head>
 
@@ -47,7 +48,7 @@
       	{# Research bar #} 
 	  <li class="nav-item">
         <form method="get" action="/dbproducts/research_substitute/">
-            <input id="product" type="text" name="product"> 
+            <input id="product" type="text" name="txtSearch" id="txtSearch"> 
         </form>
           </li>
 
@@ -120,6 +121,7 @@
   </footer>
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Plugin JavaScript -->
@@ -128,7 +130,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="{% static 'js/creative.min.js' %}"></script>
-
+  <script src="{% static 'js/autocomplete.js' %}"></script>
 </body>
 
 </html>

@@ -4,11 +4,12 @@
 {% block title %}{{ consult_fav_title }}{% endblock%}
 
 {% block header %}
-<header class="header-product">
- {% load static %}
- <img src="{% static "img/bg-masthead.jpg" %}" width="1500" height="300" class="header-product-image">
- <h3 class="header-product-title">{{ title }}</h3>
-</header>
+<div class="container-header">
+{% load static %}
+  <img src="{% static "img/bg-masthead.jpg" %}" alt="Snow" style="width:100%;" height="300" width="1500" class="header-image">
+  <div class="centered"><h5>{{ title }}</h5></div>
+</div>
+
 {% endblock %}
 
 {% block contact %}
@@ -25,7 +26,7 @@
           <div class="result-image">
             <img src={{ product.substitute.img_front_url }} class="product-image">
 
-            <div class="product-nutriscore">{{ product.substitute.nutri_grade }}</div>
+            <div class="product-nutriscore">&#{{ product.substitute.nutri_grade }};</div>
           </div>
           
           <a title={{ product.substitute.product_name }} href="{% url 'detail' product.substitute.id %}">{{ product.substitute.product_name|truncatechars:"18" }}</a>
