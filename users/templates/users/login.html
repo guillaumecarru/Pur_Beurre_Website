@@ -33,10 +33,7 @@
 	</div>
 	<div class="col-lg-8 text-center">
 	{% if not user.is_authenticated %}
-		  <form action="/users/create_user/" method="get">
-		      {% csrf_token %}
-			  <button type="submit" class="btn btn-dark">{{ create_acc }}</button> 
-		  </form>
+		  <a href="{% url 'create_user' %}" class="btn btn-dark">{{ create_acc }}</a>
 		  {% endif %}
 	</div>
       </div>

@@ -142,67 +142,7 @@
 /* This styles apply for the result_research view */
 * {
  box-sizing: border-box;
-}
-.header-product {
-    position: relative;
-    width: 1200px;
-    height: 200px;
-    display: flex;
-}
-
-.header-product-image {
-    position: absolute;
-    height: 200px;
-    width: 1200px;
-    object-fit: cover;
-    object-position: 50% 50%;
-}
-
-.header-product-title {
-    position: relative;
-    z-index: 1;
-    color: white;
-    margin: auto;
- background-color: rgba(0, 0, 0, 0.5);
-  padding: 25px;
-}
-
-/* On screens that are 992px or less, set the background color to blue */
-@media screen and (max-width: 992px) {
-  .header-product {
-    position: relative;
-    width: 800px;
-    height: 200px;
-    display: flex;
-  }
-  .header-product-image {
-    position: absolute;
-    width: 800px;
-    height: 200px;
-  }
-  .header-product-title {
-    position: relative;
-    width: 800px;
-    height: 200px;
-    padding: 75px;
-  }
-}
-
-/* On screens that are 600px or less, set the background color to olive */
-@media screen and (max-width: 600px) {
-  .header-product {
-    position: relative;
-    width: 500px;
-    height: 200px;
-    display: flex;
-  }
-.header-product-image {
-    position: absolute;
-    width: 500px;
-    height: 200px;
-  }
-}
-
+ }
 /* Style for results */
 
 .result {

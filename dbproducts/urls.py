@@ -5,5 +5,5 @@ from . import views
 urlpatterns = [
     path("research_substitute/", views.research_substitute, name="research_substitute"),
     path("details/<int:product_id>/", views.detail, name="detail"),
-    re_path(r'^ajax_calls/search/', views.autocompleteModel),
+    path("ajax_search/", views.autocomplete, name="autocomplete"),
 ]

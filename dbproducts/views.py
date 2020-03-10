@@ -67,8 +67,9 @@ def detail(request, product_id):
     return render(request, "products/show_product.html", DICTIO)
 
 # view that will autocomplete the research bar
-def autocompleteModel(request):
+def autocomplete(request):
     term = request.GET.get("term")
-    products = Product.objects.filter(name__icontains=term)[:2]
-    products_list = [product.name for product in products]
+    products = Product.objects.filter(product_name__icontains=term)[:8]
+    products_list = [product.product_name for product in products]
     return JsonResponse(products_list, safe=False)
+
