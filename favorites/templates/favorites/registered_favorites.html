@@ -40,44 +40,26 @@
         {% endfor %}
       </div>
         </div>
-    <div class="pagination">
-       {% if favorites.has_previous %}
-       <div class="container">
-       <div class="row h-100 align-items-center justify-content-center text-center">
-	       <div class="text-black-75 font-weight-light mb-5">
-		       <a href="{% url 'consult_favorites' favorites.previous_page_number %}">{{ previous }}</a> -
-		       {% endif %}
-		       
-		       {% if favorites.has_previous or favorites.has_next  %}
-		       <span class="current">
-			   Page {{ favorites.number }} {{ on }} {{ favorites.paginator.num_pages }}
-		       </span>
-		       {% endif %}
+    <div class="container">
+           <div class="row h-100 align-items-center justify-content-center text-center">
+	           <div class="text-black-75 font-weight-light mb-5">
+		    <div class="pagination">
+		       {% if favorites.has_previous %}
+				       <a href="{% url 'consult_favorites' favorites.previous_page_number %}">{{ previous }}</a> -
+				       {% endif %}
+				       
+				       {% if favorites.has_previous or favorites.has_next  %}
+				       <span class="current">
+					   Page {{ favorites.number }} {{ on }} {{ favorites.paginator.num_pages }}
+				       </span>
+				       {% endif %}
 
-		       {% if favorites.has_next %}
-		       - <a href="{% url 'consult_favorites' favorites.next_page_number %}">{{ next }}</a>
-	       </div>
+				       {% if favorites.has_next %}
+				       - <a href="{% url 'consult_favorites' favorites.next_page_number %}">{{ next }}</a>
+			       </div>
        </div>
        </div>
        {% endif %}
     </div>
 </section>
 {% endblock %}
-
-{# Do i need to also put informations of the old product ? #}
-
-{#<p>
-<small style="color: grey">
-    {{ infos.old_prod }}
- </small>
-{{ product.original_prod.product_name }}
-</p>
-
-<p>
-    <small style="color: grey">
-      {{ info.substitute }}
-    </small>
-    <a href="{% url 'detail' product.substitute.id %}">{{ product.substitute.product_name }}</a>
-    <img src={{ product.substitute.img_front_url }} alt="image substitut" width=100px>
-</p>
-#}  
