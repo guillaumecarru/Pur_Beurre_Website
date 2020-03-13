@@ -65,12 +65,16 @@ def detail(request, product_id):
         "name":"lien vers OpenFoodFacts",
         "link_off":"Voir la fiche d'OpenFoodFacts",
     }
+    try:
+        info_prod = Product.objects.get(id=product_id)
+        DICTIO["nutri_score"] = str(chr(info_prod.nutri_grade))
+        DICTIO["info"] = info_prod
+        DICTIO["header_image_url"]=info_prod.img_front_url.replace("400", "full")
+        return render(request, "products/show_product.html", DICTIO)
 
-    info_prod = Product.objects.get(id=product_id)
-    DICTIO["nutri_score"] = str(chr(info_prod.nutri_grade))
-    DICTIO["info"] = info_prod
-    DICTIO["header_image_url"]=info_prod.img_front_url.replace("400", "full") 
-    return render(request, "products/show_product.html", DICTIO)
+    except ObjectDoesNotExist:
+        messages.error(request, "L'id du produit que vous avez sélectionné n'existe pas")
+        return redirect("homepage")
 
 # view that will autocomplete the research bar
 def autocomplete(request):

@@ -55,7 +55,7 @@ def consult_favorites(request, page=1):
         }
     }
     current_user = request.user
-    user_favorites = Favorites.objects.filter(user=current_user)
+    user_favorites = Favorites.objects.filter(user=current_user).order_by('id')
     paginator = Paginator(user_favorites, 6)
 
     try:
