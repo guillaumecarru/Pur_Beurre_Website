@@ -46,6 +46,9 @@ class DbProductsAppTestCase(TestCase):
 
         # Creating vars for tests
         self.product_tested = Product.objects.get(id=598745601)
+        self.fake_result = Product.objects.get(id=6598745801)
+
+        # Creating fake_product_double for tests
         self.double_product = Product.objects.get(id=654785423)
 
         # Client for tests
@@ -87,3 +90,16 @@ product if more than one contains that name"""
                                            {"txtSearch":self.double_product.product_name})
         self.assertEqual(response.status_code, 200)
 
+    def test_autocomplete_research_registering_word(self):
+        """ This test will make sure view 'autocomplete' registers words properly"""
+        response = self.client.get(reverse('autocomplete'), \
+                                           {"term":self.product_tested.product_name})
+        self.assertJSONEqual(
+            str(response.content, encoding='utf8'),
+            ['cacahuètes au chocolat']
+        )
+    def test_autocomplete_research_working(self):
+        """ This test will make sure view 'autocomplete' renders Json answer"""
+        response = self.client.get(reverse('autocomplete'), \
+                                           {"term":self.product_tested.product_name})
+        self.assertEqual(response.status_code, 200)

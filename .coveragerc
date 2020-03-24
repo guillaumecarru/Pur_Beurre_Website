@@ -1,0 +1,10 @@
+[run]
+ branch = True
+ source = .
+ omit =
+  .coveragerc
+  */mydjango/*
+  */tests/*
+  */__init__.py*
+  */migrations/*
+  */manage.py*
