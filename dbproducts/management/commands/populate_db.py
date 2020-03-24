@@ -5,7 +5,7 @@ from django.conf import settings
 import requests
 from dbproducts.models import Category, Product
 
-from dbproducts.management.commands.related_functions import symbol_removal
+from dbproducts.related_functions import symbol_removal
 
 class Command(BaseCommand):
     """ This command will populate server. Only use once"""
