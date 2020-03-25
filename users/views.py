@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash, l
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from users.forms import CustomUserCreationForm, ConnexionForm, CustomUserChangeForm, CustomUserChangePassword
+from users.forms import CustomUserCreationForm, ConnexionForm
 
 def create_user(request):
     """ This function will be used to display a template for user creation"""

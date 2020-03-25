@@ -26,14 +26,20 @@ class UsersAppTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_disconnect_page(self):
-        """ this test will make sure url 'user_informations' returns template"""
+        """ this test will make sure url 'disconnect_user' returns template"""
         self.client.login(username='testuser', password='12345')
         response = self.client.get(reverse('disconnect_user'))
         self.assertEqual(response.status_code, 302)
 
     def test_disconnect_page_follows(self):
-        """ this test will make sure url 'user_informations' returns template"""
+        """ this test will make sure url 'disconnect_user' returns template"""
         self.client.login(username='testuser', password='12345')
         response = self.client.get(reverse('disconnect_user'),
                                   follow=True)
         self.assertTemplateUsed(response,"main/main.html")
+
+    def test_user_informations_page(self):
+        """ this test will make sure url 'user_informations' returns template"""
+        self.client.login(username='testuser', password='12345')
+        response = self.client.get(reverse('user_informations'))
+        self.assertEqual(response.status_code, 200)

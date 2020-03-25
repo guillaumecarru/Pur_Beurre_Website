@@ -34,7 +34,7 @@ class FormsUsersTestCase(TestCase):
         self.assertTrue(form.is_valid)
 
     def test_CustomUserChangeForm_is_valid(self):
-        """test"""
+        """test for CustomUserChangeForm"""
 
         form_data = {"username":"testuser",
                      "password":"12345",
@@ -44,4 +44,13 @@ class FormsUsersTestCase(TestCase):
         form = CustomUserChangeForm(data={"username":"testuser2"})
         self.assertTrue(form.is_valid)
 
+    def test_CustomUserChangePassword_is_valid(self):
+        """test for CustomUserChangePassword"""
 
+        form_data = {"username":"testuser",
+                     "password":"12345",
+                    }
+
+        ConnexionForm(data=form_data)
+        form = CustomUserChangeForm(data={"password":"123456"})
+        self.assertTrue(form.is_valid)
