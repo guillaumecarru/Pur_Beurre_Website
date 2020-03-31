@@ -9,10 +9,11 @@ coverage = "*"
 
 [packages]
 django = "*"
-psycopg2-binary = "*"
 django-extensions = "*"
 requests = "*"
 unidecode = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.6"
