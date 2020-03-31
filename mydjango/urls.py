@@ -21,5 +21,5 @@ urlpatterns = [
     path('dbproducts/', include('dbproducts.urls')),
     path('users/', include('users.urls')),
     path('favorites/', include('favorites.urls')),
-    path('', include('main.urls')),
+    path('main/', include('main.urls')),
 ]
