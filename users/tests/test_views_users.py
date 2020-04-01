@@ -9,9 +9,12 @@ class UsersAppTestCase(TestCase):
 
     def test_create_user_page(self):
         """This test will make sure url 'create_user' works properly"""
-
         form = {"username":"test_create_user",
-                "password":"azer123"
+                "password1":"azerJkdfe123",
+                "password2":"azerJkdfe123",
+                'email':"g@g.com",
+                'first_name':"jean",
+                'last_name':"claude",
                }
         response = self.client.post(reverse('create_user'),
                                     form
@@ -19,12 +22,13 @@ class UsersAppTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_create_user_error_page(self):
-        """This test will make sure url 'create_user' works properly"""
+        """This test will make sure url 'create_user' redirects properly"""
         CustomUser.objects.create(username="test_user_fail", password="123456")
 
         response = self.client.post(reverse('create_user'),
                                     {"username":"test_user_fail",
-                                     "password1":"",
+                                     "password1":"123456",
+                                     "password2":"123456",
                                     },
                                    )
         self.assertEqual(response.status_code, 200)
