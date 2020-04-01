@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("KEY_PROD")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["site-pur-beurre.herokuapp.com"]
 

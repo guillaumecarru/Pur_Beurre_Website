@@ -11,7 +11,11 @@ class UsersAppTestCase(TestCase):
         """This test will make sure url 'create_user' works properly"""
 
         form = {"username":"test_create_user",
-                "password":"azer123"
+                "password1":"azerJkdfe123",
+                "password2":"azerJkdfe123",
+                'email':"g@g.com",
+                'first_name':"jean",
+                'last_name':"claude",
                }
         response = self.client.post(reverse('create_user'),
                                     form
