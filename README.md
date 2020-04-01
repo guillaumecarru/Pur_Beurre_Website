@@ -32,7 +32,8 @@ Afin d'optimiser l'expérience, Heroku offre à ses utilisateurs une quantité d
 
 Pour faire des tests unitaires:
 * pipenv shell
-* python manage.py runserver (dans la racine du projet)
+* coverage run --source='.' manage.py test
+* coverage report
 
 Pour lancer le site en local:
 * Créer un fichier .env à la racine du projet définissant les varibles d'environnement ou BDD correspondra au nom de votre base de données postgresql, USER le nom d'utilisateur de la base, PW_POSTGRES le mot de passe de l'utilisateur, et KEY_PROD la clé de production.
